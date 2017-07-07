@@ -4,6 +4,7 @@
     @import 'variables';
     @import 'colors';
     @import 'type';
+    @import "bootstrap";
     @import 'layout';
     @import 'buttons';
     @import 'form';
@@ -14,4 +15,5 @@
     @import 'information';
     @import 'authorize';
     @import 'errors';
+    @import 'sidemenu';
 }

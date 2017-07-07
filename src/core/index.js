@@ -16,14 +16,22 @@ const { GIT_DIRTY, GIT_COMMIT, PACKAGE_VERSION } = buildInfo
 module.exports = function SwaggerUI(opts) {
 
   win.versions = win.versions || {}
-  win.versions.swaggerUi = `${PACKAGE_VERSION}/${GIT_COMMIT || "unknown"}${GIT_DIRTY ? "-dirty" : ""}`
+  win.versions.swaggerUi = `${PACKAGE_VERSION}/${GIT_COMMIT || "unknown"}${GIT_DIRTY ? "-dirty" : ""}`;
+
+  const urls = [
+    {name:'Account Management',url:'https://api.airsembly-staging.com/accountManagement/Swagger.json', apikeyName:'airvm-token'},
+    {name:'Payment Gateway',url:'https://api.airsembly-staging.com/paymentGateway/swagger.json',apikeyName:'airvm-token'},
+    {name:'Service Offering',url:'https://api.airsembly-staging.com/serviceOfferings/swagger.json',apikeyName:'airvm-token'},
+    {name:'vCloud Automator',url:'https://api.airsembly-staging.com/automators/vcloud/swagger.json',apikeyName:'airvm-token'},
+    // {name:'Audit',url:'https://api.airsembly-staging.com/audit/swagger.json',apikeyName:'airvm-token'}
+  ];
 
   const defaults = {
     // Some general settings, that we floated to the top
     dom_id: null,
     spec: {},
-    url: "",
-    urls: null,
+    url: '',
+    urls: urls,
     layout: "BaseLayout",
     docExpansion: "list",
     validatorUrl: "https://online.swagger.io/validator",

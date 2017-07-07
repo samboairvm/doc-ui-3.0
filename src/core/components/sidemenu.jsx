@@ -1,8 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-export default class Operations extends React.Component {
-
+export default class SideMenu extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    let configs = this.props.getConfigs();
+    console.log(configs.urls);
+    this.state = { url: configs.urls[0], selectedIndex: 0, urls:configs.urls };
+  }
   static propTypes = {
     specSelectors: PropTypes.object.isRequired,
     specActions: PropTypes.object.isRequired,
@@ -13,6 +18,18 @@ export default class Operations extends React.Component {
     authSelectors: PropTypes.object.isRequired,
     getConfigs: PropTypes.func.isRequired
   };
+
+  loadSpec = () => {
+    let url = this.state.urls[this.state.selectedIndex].url;
+    this.props.specActions.updateUrl(url);
+    this.props.specActions.download(url);
+  }
+
+  downloadUrl = (index, e) => {
+    this.setState({selectedIndex:index});
+    this.loadSpec()
+    e.preventDefault()
+  }
 
   render() {
     let {
@@ -36,19 +53,31 @@ export default class Operations extends React.Component {
     let { docExpansion, displayOperationId, displayRequestDuration } = getConfigs()
 
     return (
-        <div>
-          {
-            taggedOps.map( (tagObj, tag) => {
-              let operations = tagObj.get("operations")
-              let tagDescription = tagObj.getIn(["tagDetails", "description"], null)
+        <div className="navigation" id="sidemenu">
+          <ul>
+            <li>
+              <a onClick={(e)=>this.downloadUrl(0,e) }>Account</a>
+            </li>
+            <li>
+              <a onClick={(e)=>this.downloadUrl(1,e) }>Service</a>
+            </li>
+            <li>
+              <a onClick={(e)=>this.downloadUrl(2,e) }>Auth</a>
+            </li>
+          </ul>
+          <ul>
+            {
+              taggedOps.map( (tagObj, tag) => {
+                let operations = tagObj.get("operations")
+                let tagDescription = tagObj.getIn(["tagDetails", "description"], null)
 
-              let isShownKey = ["operations-tag", tag]
-              let showTag = layoutSelectors.isShown(isShownKey, docExpansion === "full" || docExpansion === "list")
+                let isShownKey = ["operations-tag", tag]
+                let showTag = layoutSelectors.isShown(isShownKey, docExpansion === "full" || docExpansion === "list")
 
-              return (
-                <div className={showTag ? "opblock-tag-section is-open" : "opblock-tag-section"} key={"operation-" + tag}>
-
-                  <Collapse isOpened={showTag}>
+                return (
+                    <li key={tag}>
+                      <a>{tag}</a>
+                      <ul>
                     {
                       operations.map( op => {
 
@@ -61,49 +90,30 @@ export default class Operations extends React.Component {
                         const response = specSelectors.responseFor(op.get("path"), op.get("method"))
                         const request = specSelectors.requestFor(op.get("path"), op.get("method"))
 
-                        return <Operation
-                          {...op.toObject()}
+                        let opp = op.toObject()
 
-                          isShownKey={isShownKey}
-                          jumpToKey={jumpToKey}
-                          showSummary={showSummary}
-                          key={isShownKey}
-                          response={ response }
-                          request={ request }
-                          allowTryItOut={allowTryItOut}
+                        return(
+                        <li key={opp.operation.get("id")}>
+                          <a>{opp.operation.get("summary")}</a>
+                        </li>)
 
-                          displayOperationId={displayOperationId}
-                          displayRequestDuration={displayRequestDuration}
 
-                          specActions={ specActions }
-                          specSelectors={ specSelectors }
-
-                          layoutActions={ layoutActions }
-                          layoutSelectors={ layoutSelectors }
-
-                          authActions={ authActions }
-                          authSelectors={ authSelectors }
-
-                          getComponent={ getComponent }
-                          fn={fn}
-                          getConfigs={ getConfigs }
-                        />
                       }).toArray()
                     }
-                  </Collapse>
-                </div>
+                      </ul>
+                  </li>
                 )
-            }).toArray()
-          }
+              }).toArray()
+            }
 
-          { taggedOps.size < 1 ? <h3> No operations defined in spec! </h3> : null }
+            { taggedOps.size < 1 ? <h3> No operations defined in spec! </h3> : null }
+          </ul>
         </div>
     )
   }
-
 }
 
-Operations.propTypes = {
+SideMenu.propTypes = {
   layoutActions: PropTypes.object.isRequired,
   specSelectors: PropTypes.object.isRequired,
   specActions: PropTypes.object.isRequired,

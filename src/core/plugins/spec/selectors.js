@@ -87,7 +87,7 @@ export const operations = createSelector(
       if(!path || !path.forEach) {
         return {}
       }
-      path.forEach((operation, method) => {
+      path.forEach((operation, method,) => {
         if(OPERATION_METHODS.indexOf(method) === -1) {
           return
         }
@@ -95,7 +95,7 @@ export const operations = createSelector(
           path: pathName,
           method,
           operation,
-          id: `${method}-${pathName}`
+          id: `${method}-${pathName}`,
         }))
       })
     })

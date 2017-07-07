@@ -25,6 +25,7 @@ export default class BaseLayout extends React.Component {
     let schemes = specSelectors.schemes()
 
     let Info = getComponent("info")
+    let SideMenu = getComponent("sidemenu", true)
     let Operations = getComponent("operations", true)
     let Models = getComponent("models", true)
     let AuthorizeBtn = getComponent("authorizeBtn", true)
@@ -41,8 +42,11 @@ export default class BaseLayout extends React.Component {
 
     return (
 
-      <div className='swagger-ui'>
-          <div>
+      <div className='swagger-ui swagger-section'>
+          <div className="col-sm-3">
+            <SideMenu />
+          </div>
+          <div className="col-sm-9">
             <Errors/>
             <Row className="information-container">
               <Col mobile={12}>
