@@ -46,6 +46,7 @@ import Model from "core/components/model"
 import Models from "core/components/models"
 import TryItOutButton from "core/components/try-it-out-button"
 import SideMenu from "core/components/sidemenu"
+import SideMenuItem from "core/components/sidemenuitem"
 
 import Markdown from "core/components/providers/markdown"
 
@@ -94,7 +95,8 @@ export default function() {
       TryItOutButton,
       Markdown,
       BaseLayout,
-      sidemenu: SideMenu
+      sidemenu: SideMenu,
+        sidemenuitem: SideMenuItem
     }
   }
 

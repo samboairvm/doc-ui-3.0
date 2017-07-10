@@ -30,7 +30,7 @@ module.exports = function SwaggerUI(opts) {
     // Some general settings, that we floated to the top
     dom_id: null,
     spec: {},
-    url: '',
+    url: 'https://api.airsembly-staging.com/accountManagement/Swagger.json',
     urls: urls,
     layout: "BaseLayout",
     docExpansion: "list",
