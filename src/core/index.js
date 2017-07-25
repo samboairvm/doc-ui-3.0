@@ -19,7 +19,7 @@ module.exports = function SwaggerUI(opts) {
   win.versions.swaggerUi = `${PACKAGE_VERSION}/${GIT_COMMIT || "unknown"}${GIT_DIRTY ? "-dirty" : ""}`;
 
   const urls = [
-    {name:'Account Management',url:'https://api.airsembly-staging.com/accountManagement/Swagger.json', apikeyName:'airvm-token'},
+    {name:'Account Management',url:'https://api.airsembly-dev6.com/accountManagement/Swagger.json', apikeyName:'airvm-token'},
     {name:'Payment Gateway',url:'https://api.airsembly-staging.com/paymentGateway/swagger.json',apikeyName:'airvm-token'},
     {name:'Service Offering',url:'https://api.airsembly-staging.com/serviceOfferings/swagger.json',apikeyName:'airvm-token'},
     {name:'vCloud Automator',url:'https://api.airsembly-staging.com/automators/vcloud/swagger.json',apikeyName:'airvm-token'},

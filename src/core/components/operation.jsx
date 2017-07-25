@@ -152,6 +152,7 @@ export default class Operation extends PureComponent {
     let onChangeKey = [ path, method ] // Used to add values to _this_ operation ( indexed by path and method )
 
     return (
+      <div className="opblock is-close">
         <div className={deprecated ? "opblock opblock-deprecated" : shown ? `opblock opblock-${method} is-open` : `opblock opblock-${method}`} id={isShownKey} >
           <div className={`opblock-summary opblock-summary-${method}`} onClick={this.toggleShown} >
             <span className="opblock-summary-method">{method.toUpperCase()}</span>
@@ -261,6 +262,7 @@ export default class Operation extends PureComponent {
             </div>
           </Collapse>
         </div>
+      </div>
     )
   }
 

@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import SideMenuService from "./sidemenumodel";
 
 export default class SideMenuItem extends React.Component {
     constructor(props, context) {
@@ -16,6 +17,14 @@ export default class SideMenuItem extends React.Component {
         authSelectors: PropTypes.object.isRequired,
         getConfigs: PropTypes.func.isRequired
     };
+
+  setTag = function(tag){
+        SideMenuService.tag = tag;
+    }
+
+  setOperation = function(id){
+    SideMenuService.operationid = id;
+  }
 
     render() {
         let {
@@ -44,7 +53,7 @@ export default class SideMenuItem extends React.Component {
             return (<a></a>)
         }
         return (
-              <ul>
+              <ul >
                   {
                       taggedOps.map( (tagObj, tag) => {
                           let operations = tagObj.get("operations")
@@ -55,8 +64,8 @@ export default class SideMenuItem extends React.Component {
 
                           return (
                               <li key={tag}>
-                                <a>{tag}</a>
-                                <ul>
+                                <a onClick={this.setTag(tag)}>{tag}</a>
+                                <ul className="collapse-" key={tag}>
                                     {
                                         operations.map( op => {
 
@@ -73,7 +82,7 @@ export default class SideMenuItem extends React.Component {
 
                                             return(
                                                 <li key={opp.operation.get("id")}>
-                                                  <a ng-click="">{opp.operation.get("summary")}</a>
+                                                  <a onClick={this.setOperation(op.get("id"))}>{opp.operation.get("summary")}</a>
                                                 </li>)
 
 
